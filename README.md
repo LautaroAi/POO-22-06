@@ -1,4 +1,3 @@
-
 ## Alumno: Lautaro Rivieri
 
 ### Desafíos Contemporáneos en el Desarrollo de Software: POO y Patrones de Diseño Aplicados
