@@ -6,7 +6,7 @@
     "typescript": "^6.0.3"
   },
   "scripts": {
-    "start": "ts-node example.ts",
+    "start": "ts-node src/example.ts",
     "build": "tsc",
     "test": "jest"
   }
