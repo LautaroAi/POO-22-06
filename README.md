@@ -76,6 +76,38 @@
 
 ---
 
+## ¿Cómo ejecutar?
+
+El repositorio contiene **dos formas** de ejecutar los desafíos: una **estructura por carpetas** y una **versión compacta**.
+
+### 1. Estructura por carpetas (recomendada para desarrollo y pruebas)
+
+Cada desafío se encuentra en su propia carpeta (`1.GildedRose/`, `2.VendingMachine/`, etc.), con su propio `package.json` y dependencias. Para ejecutar cualquiera de ellos:
+
+```bash
+cd 1.GildedRose          # Elige el desafío que quieres ejecutar
+npm install              # instala las dependencias
+npm start                # ejecuta el ejemplo principal
+npm test                 # ejecuta las pruebas unitarias
+```
+
+### 2. Versión compacta (SingleFile)
+Para una ejecución rápida y autocontenida, todos los desafíos han sido comprimidos en un **único archivo TypeScript por desafío**, ubicados en la carpeta `SingleFile/`. Esta versión no requiere `package.json` por separado, solo `ts-node` y `TypeScript` instalados globalmente o en el proyecto.
+
+```bash
+cd SingleFile
+npm install               # instala ts-node y typescript (si no están globales)
+npx ts-node 1.gilded-rose.ts
+npx ts-node 2.vending-machine.ts
+npx ts-node 3.parking-lot.ts
+npx ts-node 4.cab-booking.ts
+npx ts-node 5.agentic-ai.ts
+```
+>[!TIP]
+> En los desafíos 3 y 4, la salida incluye setTimeout, por lo que los logs aparecerán de forma asíncrona después de unos segundos. No es necesario interactuar, el ejemplo se ejecuta completamente.
+
+---
+
 ## Conclusión
 
 Este proyecto demuestra que la aplicación metódica de patrones de diseño no es una mera formalidad académica, sino un pilar fundamental para mitigar la deuda técnica en sistemas empresariales. Desde la refactorización de código legado hasta la orquestación de inteligencia artificial distribuida, la orientación a objetos y los principios SOLID proporcionan la base determinista necesaria para garantizar la fiabilidad, mantenibilidad y evolución tecnológica a largo plazo.
