@@ -1,7 +1,7 @@
 import { Passenger } from '../models/Passenger';
 import { Driver } from '../models/Driver';
 import { Trip } from '../models/Trip';
-import { Location } from '../models/Location';
+import { GeoLocation } from '../models/GeoLocation';
 import { SupplyService } from '../services/SupplyService';
 import { DemandService } from '../services/DemandService';
 import { MatchingService } from '../services/MatchingService';
@@ -24,30 +24,30 @@ export class CabBookingFacade {
     this.matchingService = new MatchingService(this.supplyService, this.demandService);
   }
 
-  registerPassenger(id: string, name: string, location: Location): Passenger {
-    const passenger = new Passenger(id, name, location);
+  registerPassenger(id: string, name: string, GeoLocation: GeoLocation): Passenger {
+    const passenger = new Passenger(id, name, GeoLocation);
     this.demandService.addPassenger(passenger);
     return passenger;
   }
 
-  registerDriver(id: string, name: string, vehicleType: VehicleType, location: Location): Driver {
-    const driver = new Driver(id, name, vehicleType, location);
+  registerDriver(id: string, name: string, vehicleType: VehicleType, GeoLocation: GeoLocation): Driver {
+    const driver = new Driver(id, name, vehicleType, GeoLocation);
     this.supplyService.addDriver(driver);
     return driver;
   }
 
-  updatePassengerLocation(passengerId: string, location: Location): void {
-    this.demandService.updatePassengerLocation(passengerId, location);
+  updatePassengerGeoLocation(passengerId: string, GeoLocation: GeoLocation): void {
+    this.demandService.updatePassengerGeoLocation(passengerId, GeoLocation);
   }
 
-  updateDriverLocation(driverId: string, location: Location): void {
-    this.supplyService.updateDriverLocation(driverId, location);
+  updateDriverGeoLocation(driverId: string, GeoLocation: GeoLocation): void {
+    this.supplyService.updateDriverGeoLocation(driverId, GeoLocation);
   }
 
   requestTrip(
     passengerId: string,
-    pickup: Location,
-    dropoff: Location,
+    pickup: GeoLocation,
+    dropoff: GeoLocation,
     pricingStrategy?: PricingStrategy
   ): Trip {
     const passenger = this.demandService.getPassenger(passengerId);
@@ -115,7 +115,7 @@ export class CabBookingFacade {
     return this.trips.get(tripId);
   }
 
-  getNearbyDrivers(location: Location, radiusKm: number = 5): Driver[] {
-    return this.supplyService.getAvailableDrivers(location, radiusKm);
+  getNearbyDrivers(GeoLocation: GeoLocation, radiusKm: number = 5): Driver[] {
+    return this.supplyService.getAvailableDrivers(GeoLocation, radiusKm);
   }
 }

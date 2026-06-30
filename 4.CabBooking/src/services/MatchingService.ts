@@ -3,7 +3,7 @@ import { Driver } from '../models/Driver';
 import { Trip } from '../models/Trip';
 import { SupplyService } from './SupplyService';
 import { DemandService } from './DemandService';
-import { Location } from '../models/Location';
+import { GeoLocation } from '../models/GeoLocation';
 
 export class MatchingService {
   constructor(
@@ -16,14 +16,14 @@ export class MatchingService {
     if (!passenger) return null;
 
     const drivers = this.supplyService.getAvailableDrivers(
-      passenger.currentLocation,
+      passenger.currentGeoLocation,
       radiusKm
     );
 
     // Priorizar drivers con mejor rating y más cercanos
     const sorted = drivers.sort((a, b) => {
-      const distA = a.currentLocation.distanceTo(passenger.currentLocation);
-      const distB = b.currentLocation.distanceTo(passenger.currentLocation);
+      const distA = a.currentGeoLocation.distanceTo(passenger.currentGeoLocation);
+      const distB = b.currentGeoLocation.distanceTo(passenger.currentGeoLocation);
       if (distA !== distB) return distA - distB;
       return b.rating - a.rating;
     });

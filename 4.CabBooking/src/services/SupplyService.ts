@@ -1,5 +1,5 @@
 import { Driver } from '../models/Driver';
-import { Location } from '../models/Location';
+import { GeoLocation } from '../models/GeoLocation';
 
 export class SupplyService {
   private drivers: Map<string, Driver> = new Map();
@@ -12,31 +12,31 @@ export class SupplyService {
   }
 
   private indexDriver(driver: Driver): void {
-    const key = driver.currentLocation.getGridKey(this.gridSize);
+    const key = driver.currentGeoLocation.getGridKey(this.gridSize);
     if (!this.gridIndex.has(key)) {
       this.gridIndex.set(key, new Set());
     }
     this.gridIndex.get(key)!.add(driver.id);
   }
 
-  updateDriverLocation(driverId: string, location: Location): void {
+  updateDriverGeoLocation(driverId: string, GeoLocation: GeoLocation): void {
     const driver = this.drivers.get(driverId);
     if (!driver) return;
 
     // Remover del índice viejo
-    const oldKey = driver.currentLocation.getGridKey(this.gridSize);
+    const oldKey = driver.currentGeoLocation.getGridKey(this.gridSize);
     this.gridIndex.get(oldKey)?.delete(driverId);
 
     // Actualizar ubicación
-    driver.updateLocation(location);
+    driver.updateGeoLocation(GeoLocation);
 
     // Re-indexar
     this.indexDriver(driver);
   }
 
-  getAvailableDrivers(location: Location, radiusKm: number = 5): Driver[] {
+  getAvailableDrivers(GeoLocation: GeoLocation, radiusKm: number = 5): Driver[] {
     const gridRadius = Math.ceil(radiusKm / (this.gridSize * 111));
-    const centerKey = location.getGridKey(this.gridSize);
+    const centerKey = GeoLocation.getGridKey(this.gridSize);
     const [centerLat, centerLng] = centerKey.split(',').map(Number);
 
     const nearbyDrivers: Driver[] = [];
@@ -48,7 +48,7 @@ export class SupplyService {
         if (driverIds) {
           for (const id of driverIds) {
             const driver = this.drivers.get(id);
-            if (driver && driver.isAvailable && driver.currentLocation.distanceTo(location) <= radiusKm) {
+            if (driver && driver.isAvailable && driver.currentGeoLocation.distanceTo(GeoLocation) <= radiusKm) {
               nearbyDrivers.push(driver);
             }
           }
@@ -58,7 +58,7 @@ export class SupplyService {
 
     // Ordenar por distancia
     return nearbyDrivers.sort((a, b) =>
-      a.currentLocation.distanceTo(location) - b.currentLocation.distanceTo(location)
+      a.currentGeoLocation.distanceTo(GeoLocation) - b.currentGeoLocation.distanceTo(GeoLocation)
     );
   }
 

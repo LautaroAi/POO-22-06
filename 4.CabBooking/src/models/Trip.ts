@@ -1,6 +1,6 @@
 import { Passenger } from './Passenger';
 import { Driver } from './Driver';
-import { Location } from './Location';
+import { GeoLocation } from './GeoLocation';
 import { TripStatus } from '../enums/TripStatus';
 import { PricingStrategy } from '../services/pricing/PricingStrategy';
 import { FixedPricing } from '../services/pricing/FixedPricing';
@@ -19,8 +19,8 @@ export class Trip {
   constructor(
     public readonly id: string,
     public readonly passenger: Passenger,
-    public readonly pickupLocation: Location,
-    public readonly dropoffLocation: Location,
+    public readonly pickupGeoLocation: GeoLocation,
+    public readonly dropoffGeoLocation: GeoLocation,
     pricingStrategy?: PricingStrategy
   ) {
     this.startTime = new Date();

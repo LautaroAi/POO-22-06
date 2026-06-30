@@ -1,5 +1,5 @@
 import { Passenger } from '../models/Passenger';
-import { Location } from '../models/Location';
+import { GeoLocation } from '../models/GeoLocation';
 
 export class DemandService {
   private passengers: Map<string, Passenger> = new Map();
@@ -8,10 +8,10 @@ export class DemandService {
     this.passengers.set(passenger.id, passenger);
   }
 
-  updatePassengerLocation(passengerId: string, location: Location): void {
+  updatePassengerGeoLocation(passengerId: string, GeoLocation: GeoLocation): void {
     const passenger = this.passengers.get(passengerId);
     if (passenger) {
-      passenger.updateLocation(location);
+      passenger.updateGeoLocation(GeoLocation);
     }
   }
 

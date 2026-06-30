@@ -7,7 +7,7 @@ export class FixedPricing implements PricingStrategy {
   private perMinute: number = 0.5;
 
   calculateFare(trip: Trip): number {
-    const distance = trip.pickupLocation.distanceTo(trip.dropoffLocation);
+    const distance = trip.pickupGeoLocation.distanceTo(trip.dropoffGeoLocation);
     const duration = trip.getDurationInMinutes();
     return this.baseFare + (distance * this.perKm) + (duration * this.perMinute);
   }

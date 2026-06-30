@@ -1,10 +1,10 @@
-export class Location {
+export class GeoLocation {
   constructor(
     public readonly lat: number,
     public readonly lng: number
   ) {}
 
-  distanceTo(other: Location): number {
+  distanceTo(other: GeoLocation): number {
     // Fórmula simplificada de distancia euclidiana (en km, aproximada)
     const latDiff = this.lat - other.lat;
     const lngDiff = this.lng - other.lng;
